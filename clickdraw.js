@@ -33,8 +33,9 @@ var toggle = function(){
 //draws a white rectangle the size of the canvas
 var clearCanvas = function(e){
     e.preventDefault();
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, 600, 600);
+    //ctx.fillStyle = "white";
+    ctx.clearRect(0, 0, 600, 600);
+    ctx.beginPath();
 }
 
 //draws a rectangle, centered about the mouse's coordinate
@@ -43,18 +44,22 @@ var makeRect = function(e){
     console.log(e.clientX,e.clientY);
     sideLen = 14;
     ctx.fillStyle = "red";
-    ctx.fillRect(e.clientX - (sideLen/2), e.clientY - (sideLen/2), sideLen, sideLen);
+    ctx.fillRect(e.offsetX - (sideLen/2), e.offsetY - (sideLen/2), sideLen, sideLen);
+    //ctx.moveTo(e.offsetX, e.offsetY);
 }
 
 var makeCircle = function(e){
     console.log("This is the mouse's current coordinates")
     console.log(e.clientX,e.clientY);
-    ctx.beginPath();
+    //ctx.beginPath();
     //a 2PI arc is a circle
-    ctx.arc(e.clientX, e.clientY, 8, 0, Math.PI * 2);
+    ctx.arc(e.offsetX, e.offsetY, 8, 0, Math.PI * 2);
+    ctx.moveTo(e.offsetX, e.offsetY);
     ctx.stroke();
     ctx.fillStyle = 'black';
     ctx.fill();
+    //ctx.closePath();
+    
 
 }
 
@@ -62,14 +67,22 @@ var makeCircle = function(e){
 //If the effect is 0, then a circle will be drawn
 //If the effect is 1, then a rectangle will be drawn
 var runCanvas = function(e){
+    //ctx.beginPath();
     if (effect == 0) {
-	console.log("The effect is " + effect + " and a circle is being created")
+	console.log("The effect is " + effect + " and a circle is being created");
+	ctx.lineTo(e.offsetX,e.offsetY);
+	ctx.moveTo(e.offsetX,e.offsetY);
 	makeCircle(e);
+	//ctx.closePath();
+	//ctx.beginPath();
     } else if (effect == 1) {
-	console.log("The effect is " + effect + " and a circle is being created")
+	console.log("The effect is " + effect + " and a rectangle is being created");
+	ctx.lineTo(e.offsetX,e.offsetY);
+	ctx.moveTo(e.offsetX,e.offsetY);
 	makeRect(e);
     } else {
-	console.log("The effect is " + effect + " this is not supposed to happen")
+	console.log("The effect is " + effect + " this is not supposed to happen");
     }
+   
     
 }
