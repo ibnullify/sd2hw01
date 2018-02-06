@@ -79,6 +79,7 @@ var runCanvas = function(e){
 	console.log("The effect is " + effect + " and a rectangle is being created");
 	ctx.lineTo(e.offsetX,e.offsetY);
 	ctx.moveTo(e.offsetX,e.offsetY);
+	ctx.stroke();
 	makeRect(e);
     } else {
 	console.log("The effect is " + effect + " this is not supposed to happen");
